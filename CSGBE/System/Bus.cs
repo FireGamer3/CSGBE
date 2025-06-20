@@ -20,8 +20,7 @@ namespace CSGBE.System {
                 // Handle reading from VRAM if implemented
                 throw new NotImplementedException("Reading from VRAM is not implemented.");
             } else if (address >= 0xA000 && address <= 0xBFFF) { // External RAM
-                // Handle reading from external RAM if implemented
-                throw new NotImplementedException("Reading from external RAM is not implemented.");
+                return cart.RAMRead(address);
             } else if (address >= 0xC000 && address <= 0xDFFF) { // Internal RAM
                 // Handle reading from internal RAM if implemented
                 throw new NotImplementedException("Reading from internal RAM is not implemented.");
@@ -31,6 +30,8 @@ namespace CSGBE.System {
             } else if (address >= 0xFE00 && address <= 0xFE9F) { // OAM
                 // Handle reading from OAM if implemented
                 throw new NotImplementedException("Reading from OAM is not implemented.");
+            } else if (address >= 0xFEA0 && address <= 0xFEFF) { // Unused Area
+                return 0xFF; 
             } else if (address >= 0xFF00 && address <= 0xFF7F) { // I/O Ports
                 // Handle reading from I/O ports if implemented
                 throw new NotImplementedException("Reading from I/O ports is not implemented.");
@@ -44,15 +45,14 @@ namespace CSGBE.System {
 
         public void Write(ushort address, byte data) {
             if (address <= 0x3FFF) { // ROM Bank 0
-                Console.WriteLine($"Attempting to write to ROM Bank 0 at address {address:X4}. This is not allowed.");
+                cart.Write(address, data);
             } else if (address >= 0x4000 && address <= 0x7FFF) { // ROM Bank 1+
-                Console.WriteLine($"Attempting to write to ROM Bank 1+ at address {address:X4}. This is not allowed.");
+                cart.Write(address, data);
             } else if (address >= 0x8000 && address <= 0x9FFF) { // VRAM
                 // Handle writing to VRAM if implemented
                 throw new NotImplementedException("Writing to VRAM is not implemented.");
             } else if (address >= 0xA000 && address <= 0xBFFF) { // External RAM
-                // Handle writing to external RAM if implemented
-                throw new NotImplementedException("Writing to external RAM is not implemented.");
+                cart.RAMWrite(address, data);
             } else if (address >= 0xC000 && address <= 0xDFFF) { // Internal RAM
                 // Handle writing to internal RAM if implemented
                 throw new NotImplementedException("Writing to internal RAM is not implemented.");
@@ -62,6 +62,7 @@ namespace CSGBE.System {
             } else if (address >= 0xFE00 && address <= 0xFE9F) { // OAM
                 // Handle writing to OAM if implemented
                 throw new NotImplementedException("Writing to OAM is not implemented.");
+            } else if (address >= 0xFEA0 && address <= 0xFEFF) { // Unused Area
             } else if (address >= 0xFF00 && address <= 0xFF7F) { // I/O Ports
                 // Handle writing to I/O ports if implemented
                 throw new NotImplementedException("Writing to I/O ports is not implemented.");
