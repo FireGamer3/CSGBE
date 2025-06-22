@@ -12,9 +12,7 @@ namespace CSGBE.System {
         }
 
         public byte Read(ushort address) {
-            if (address <= 0x3FFF) { // ROM Bank 0
-                return cart.Read(address);
-            } else if (address >= 0x4000 && address <= 0x7FFF) { // ROM Bank 1+
+            if (address <= 0x7FFF) { // Cartridge ROM
                 return cart.Read(address);
             } else if (address >= 0x8000 && address <= 0x9FFF) { // VRAM
                 // Handle reading from VRAM if implemented
@@ -44,9 +42,7 @@ namespace CSGBE.System {
         }
 
         public void Write(ushort address, byte data) {
-            if (address <= 0x3FFF) { // ROM Bank 0
-                cart.Write(address, data);
-            } else if (address >= 0x4000 && address <= 0x7FFF) { // ROM Bank 1+
+            if (address <= 0x7FFF) { // Cartridge ROM
                 cart.Write(address, data);
             } else if (address >= 0x8000 && address <= 0x9FFF) { // VRAM
                 // Handle writing to VRAM if implemented

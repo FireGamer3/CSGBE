@@ -1,4 +1,4 @@
-﻿namespace CSGBE.System.MBC {
+﻿namespace CSGBE.System.Mappers {
     internal interface IMapper {
         public byte Read(byte[] rom, ushort address);
         public void Write(byte[] rom, ushort address, byte data);

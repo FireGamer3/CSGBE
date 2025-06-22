@@ -1,4 +1,6 @@
 ﻿using CSGBE.System.Extra;
+using CSGBE.System.Mappers;
+using CSGBE.System.Mappers.None;
 using CSGBE.System.MBC;
 
 namespace CSGBE.System {
@@ -31,9 +33,9 @@ namespace CSGBE.System {
         private IMapper InitializeMapper() {
             switch(RomData[0x0147]) {
                 case 0x00:
-                    return new NoneMapper(false); // ROM only, no RAM
+                    return new NoneMapper(); // ROM only, no RAM
                 case 0x08:
-                    return new NoneMapper(true); // ROM with RAM
+                    return new RamMapper(); // ROM with RAM
                 default:
                     throw new NotSupportedException($"Mapper type {RomData[0x0147]:X2} is not supported.");
             }
