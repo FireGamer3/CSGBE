@@ -1,4 +1,5 @@
 ﻿using CSGBE.System;
+using CSGBE.System.Extra;
 using System.Diagnostics;
 
 namespace CSGBE {
@@ -7,20 +8,27 @@ namespace CSGBE {
             Clock clock = new Clock();
 
             //if(args.Length == 0) {
-            //    Console.WriteLine("Usage: CSGBE <rom_file>");
+            //    Logging.InfoLog("Usage: CSGBE <rom_file>");
             //    return;
             //}
-            Cart cart = new Cart("./tetris.gb");
-            if (!cart.Checksum()) {
-                Console.WriteLine("ROM checksum failed.");
+            //cpu_instrs.gb, tetris.gb
+            Cart cart;
+            try {
+                cart = new Cart("./cpu_instrs.gb");
+            } catch (Exception ex) {
+                Logging.ExceptionHandle(ex);
                 return;
             }
-            Console.WriteLine("ROM checksum passed.");
+            if (!cart.Checksum()) {
+                Logging.InfoLog("ROM checksum failed.");
+                return;
+            }
+            Logging.DebugLog("ROM checksum passed.");
             Console.Title = cart.GetRomName();
-            Console.WriteLine($"ROM Name: {cart.GetRomName()}");
-            Console.WriteLine($"ROM Size: {cart.GetCartRomSize()} ({cart.GetFullRomSize()} bytes)");
-            Console.WriteLine($"ROM Type: {cart.GetRomType()}");
-            Console.WriteLine($"ROM Licensee: {cart.GetLicensee()}");
+            Logging.DebugLog($"ROM Name: {cart.GetRomName()}");
+            Logging.DebugLog($"ROM Size: {cart.GetCartRomSize()} ({cart.GetFullRomSize()} bytes)");
+            Logging.DebugLog($"ROM Type: {cart.GetRomType()}");
+            Logging.DebugLog($"ROM Licensee: {cart.GetLicensee()}");
 
 
             while (true) {
