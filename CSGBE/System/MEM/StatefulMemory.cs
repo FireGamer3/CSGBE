@@ -8,13 +8,13 @@ namespace CSGBE.System.MEM {
     internal class StatefulMemory : Memory {
         public bool Enabled { get; set; } = false;
 
-        public StatefulMemory(ushort size) : base(size) { }
+        public StatefulMemory(uint size) : base(size) { }
 
-        public override byte Read(ushort address) {
+        public override byte Read(uint address) {
             if (!Enabled) return 0xFF;
             return base.Read(address);
         }
-        public override void Write(ushort address, byte data) {
+        public override void Write(uint address, byte data) {
             if (!Enabled) return;
             base.Write(address, data);
         }

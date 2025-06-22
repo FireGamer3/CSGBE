@@ -282,6 +282,30 @@ namespace CSGBE.System.Extra {
             }
         }
 
+        public static string DecodeRAMSize(byte size) {
+            switch (size) {
+                case 0x00: return "None";
+                case 0x01: return "Unused / Early Homebrew";
+                case 0x02: return "8 KiB";
+                case 0x03: return "32 KiB (4 banks of 8 KiB each)";
+                case 0x04: return "128 KiB (16 banks of 8 KiB each)";
+                case 0x05: return "64 KiB (8 banks of 8 KiB each)";
+                default: return "Unknown RAM Size";
+            }
+        }
+
+        public static uint GetRamSize(byte cartRamSizeByte) {
+            switch(cartRamSizeByte) {
+                case 0x00: return 0x0000; // No RAM
+                case 0x01: return 0x07D0; // 2 KiB (unused / early homebrew) (2 kb is speculated)
+                case 0x02: return 0x2000; // 8 KiB
+                case 0x03: return 0x8000; // 32 KiB (4 banks of 8 KiB each)
+                case 0x04: return 0x20000; // 128 KiB (16 banks of 8 KiB each)
+                case 0x05: return 0x10000; // 64 KiB (8 banks of 8 KiB each)
+                default: return 0x0000; // No RAM
+            }
+        }
+
         public static byte BankBitMask(byte cartSizeByte) {
             switch (cartSizeByte) {
                 case 0x01: return 0x07;
