@@ -14,7 +14,7 @@ namespace CSGBE {
             //cpu_instrs.gb, tetris.gb
             Cart cart;
             try {
-                cart = new Cart("./cpu_instrs.gb");
+                cart = new Cart("./tetris.gb");
             } catch (Exception ex) {
                 Logging.ExceptionHandle(ex);
                 return;
@@ -27,12 +27,19 @@ namespace CSGBE {
             Console.Title = cart.GetRomName();
             Logging.DebugLog($"ROM Name: {cart.GetRomName()}");
             Logging.DebugLog($"ROM Size: {cart.GetCartRomSize()} ({cart.GetFullRomSize()} bytes)");
+            Logging.DebugLog($"RAM Size: {cart.GetCartRamSize()}");
             Logging.DebugLog($"ROM Type: {cart.GetRomType()}");
             Logging.DebugLog($"ROM Licensee: {cart.GetLicensee()}");
 
-
-            while (true) {
-                clock.WaitForNextTick();
+            Bus bus = new Bus(cart);
+            try {
+                while (true) {
+                    bus.Clock();
+                    clock.WaitForNextTick();
+                }
+            } catch (Exception ex) {
+                Logging.ExceptionHandle(ex);
+                return;
             }
         }
     }

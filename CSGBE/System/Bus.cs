@@ -1,4 +1,5 @@
-﻿using CSGBE.System.MEM;
+﻿using CSGBE.CPU;
+using CSGBE.System.MEM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,17 @@ using System.Threading.Tasks;
 namespace CSGBE.System {
     internal class Bus {
         private Cart cart;
+        private SM83 cpu;
         private Memory vram = new Memory(0x2000);
         private Memory wram = new Memory(0x2000);
         private Memory oam = new Memory(0x9F);
         public Bus(Cart cart) {
             this.cart = cart;
+            this.cpu = new SM83(this);
+        }
+
+        public void Clock() {
+            cpu.Clock();
         }
 
         public byte Read(ushort address) {

@@ -43,7 +43,7 @@ namespace CSGBE.System {
                 case 0x01:
                     return new MBC1(RomData[0x0148]); // MBC1, no RAM
                 case 0x02:
-                    return new MBC1Ram(RomData[0x0148]); // MBC1 with RAM
+                    return new MBC1Ram(RomData[0x0148], RomData[0x0149]); // MBC1 with RAM
                 default:
                     throw new NotSupportedException($"Mapper type {RomData[0x0147]:X2} is not supported.");
             }
@@ -102,6 +102,10 @@ namespace CSGBE.System {
 
         public string GetCartRomSize() {
             return CartUtils.DecodeRomSize(RomData[0x0148]);
+        }
+
+        public string GetCartRamSize() {
+            return CartUtils.DecodeRAMSize(RomData[0x0149]);
         }
     }
 }
